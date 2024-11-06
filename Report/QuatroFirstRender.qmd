@@ -1,0 +1,11 @@
+---
+title: "Take Home Exercise 1"
+subtitle: "Replicating an Experimental Study (THE 1)"
+author: "Nicolas Waser"
+format:
+  pdf:
+    toc: false
+    number-sections: true
+    number-depth: 3
+    colorlinks: true
+---
