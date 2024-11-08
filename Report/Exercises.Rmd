@@ -8,6 +8,11 @@ Exercise 1: Summary of the Paper and Main Findings
 Provide a brief summary of the paper you are replicating. Describe the main findings, especially
 those related to Study 1.
 
+Disclaimer: For this exercise I made use of the following AI Generation tools:
+- Deepl.com for translation purposes
+- The integrated Copilot tool in R Studio for generating code and text
+- The free versions of OpenAI's GPT-4o Mini, Anthropics Claude 3.5 Sonnet and Mistral's Codestral AI model for generating code and assisting me in solving the tasks.
+
 The authors posit that according to the Homonationalist thesis, support for LGBT+ issues among anti-immigration nativists and right-wing populists is not entirely genuine (organic liberalism thesis) and is instead used strategically (instrumental liberalism thesis) as a tool to justify further exclusion of immigrants, especially Muslims, who are perceived to be more homophobic, than the average western citizen. The rational behind this could be summed up as: "The enemy of my enemy is my friend" or: "I hate them (Muslims) more than I hate the others (LGBT+ people)". 
 In order to test this hypothesis, the authors conducted two survey experiments in the UK and Spain. The dependent variable is "Support for LGBT+ inclusive education in school" and was measured by means of survey response on an order randomized scale from 0 to 11, but then for the sake of simplicity were turned into a dichotomous variable for support (0 or 1). 
 In the UK, for study 1, the experimental research design randomly assigned 1200 participants into a control group and a treatment group. Those in the control group were exposed to text and pictures of nondenominational people with conventional British names protesting against LGBT+ inclusive education in schools. The treatment group was exposed to the same pictures and text, but the names and pictures were changed to appear Muslim. 
@@ -26,14 +31,199 @@ experimental variables (i.e., treatment and immigration attitudes) and provide v
 Then, select up to four covariates (e.g., gender, age, etc.) and plot their distribution too.
 If necessary, clean or transform variables. Document any changes.
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+
+From looking at the csv table for Study1 as well as looking at the study1.R script, one can deduce which variables are likely of interest for the replication. 
+As a first step, I need to find the dependent variable (DV) support for LGBT+ inclusive education, which according to the text had a 0-11 range with a randomized scale order that was transformed to 0 and 1 for easier interpretation.
+Secondly, I need to find the experimental variables for treatment and immigration attitudes.
+The treatment variable concerns the exposure to Muslim names and pictures and is most likely operationalized as a binary variable (0,1).
+The variable for immigration attitudes is likely to be operationalized as an ordinal scale (0-10) or as a binary variable.
+
+A look at the Csv table revealed the following variables as of interest for the replication:
+- Treatment variable: outcome_treat (categorical or nominal, with NAs), treatment (binary),
+- Immigration attitudes: imm_1, imm_2, (both likely ordinal or numeric) imm1mean (continous, same value), immbelow (binary), imm3 (ordinal) 
+- DV: support (binary), support2 (categorical)
+
+By also looking at the study1.R script in the code chunk below, I can see that the following variables are of interest for the replication, while the rest can likely be ignored:
+
+```{r}
+df <-df%>% 
+  mutate(treat= as.factor(treatment), --> convert to factor (categorical data)
+         treatnum= as.numeric(treatment), --> convert to numeric
+         #[...]
+         immbelow= as.factor(immbelow),
+         imm3= as.factor(imm3),
+         
+##Figure 3## 
+
+model1<- glm (support ~ treat*imm_1, data=df, family="binomial")
+summ(model1, robust=TRUE)
+df$predictINT1<-predict(model1, df, type="response")
+
+treat <- subset(df, treatnum==1)
+control <- subset(df, treatnum==0)
+proimm <- subset(df, immbelow==0)
+noproimm <- subset(df, immbelow==1)
+
+##FIGURE 4##
+
+modelsub1<- lm (support ~ treat, data=proimm)
+summ(modelsub1, robust=TRUE)
+proimm$predictedb<-predict(modelsub1, proimm)
+
+modelsub2<- lm (support ~ treat, data=noproimm)
+summ(modelsub2, robust=TRUE)
+noproimm$predictedb<-predict(modelsub2, noproimm)
+
+treatsub1 <- subset(proimm, treatnum==1)
+controlsub1 <- subset(proimm, treatnum==0)
+treatsub2 <- subset(noproimm, treatnum==1)
+controlsub2 <- subset(noproimm, treatnum==0)
 ```
+
+- Treatment variable: treatment: is transformed twofold -> treat (converted to cat. variable for model transformation), treatnum (converted to numeric binary variable for graph)
+- Immigration attitudes: immbelow (cat., converted to binary variable for graph), imm_1 (ordinal, 0-10 with 10 standing for maximal positive attitude towards immigrants)
+- DV: support (binary)
+
+From this I conclude that the following variables are of interest for the replication:
+- Treatment Variable Operationalization: treatment (0,1)
+
+- Immigrant Attitudes Operationalization: imm_1 (ordinal scale 0-10) ((or immbelow, for binary distribution Pro-/AntiImmigration))
+
+- DV operationalization: support (0,1)
+
+Below I will provide visualizations of the distribution of these variables. Let's start with the treatment variable:
+```{r}
+#Loading Data Set
+study1 <- read.csv("/Users/nicolaswaser/New-project-GitHub-first/R/Take-Home-Ex.-1/Input Data/study1_data.csv",)
+
+# Get idea of variable distribution in the form of a table
+table(study1$treatment)
+```
+
+```{r}
+#Visualizing the distribution of the treatment variable
+ggplot(study1, aes(x=treatment)) + geom_bar() + labs(title="Distribution of Treatment Variable", x="Treatment", y="Frequency")
+```
+Unsurprisingly, the treatment variable is distributed evenly across the two groups, as it should be in a randomized experiment. 
+Next, I will visualize the distribution of the Immigration attitude variable imm_1:
+```{r}
+table(study1$imm_1)
+```
+
+```{r}
+#Visualizing the distribution of imm_1
+ggplot(study1, aes(x=imm_1)) + geom_bar() + labs(title="Distribution of attitudes towards immigrants", x="Attitudes towards immigrants (from negative to positive)", y="Frequency")
+```
+The distribution of attitudes towards immigrants is skewed towards the positive side, with most respondents having a positive attitude. Note: 0 values equal to NAs, which is why the distribution starts at 1.
+For later purposes, I will also visualize the distribution of the binary variable immbelow:
+```{r}
+#Visualizing the distribution of immbelow
+ggplot(study1, aes(x=immbelow)) + geom_bar() + labs(title="Distribution of Pro- vs. Anti-immigration attitudes", x="Pro- (0) vs. Anti- (1) immigration", y="Frequency")
+```
+There are slightly more Pro-immigration than Anti-immigration sentiments in the sample. This is also in line with the graph from above. 
+Lastly, I will visualize the distribution of the DV support for LGBT+ inclusive education:
+```{r}
+#Visualizing the distribution of support for LGBT+ inclusive education
+ggplot(study1, aes(x=support)) + geom_bar() + labs(title="Distribution of support for LGBT+ inclusive education", x="Supports LGBT+ inclusive education, No (0), Yes (1)", y="Frequency")
+```
+```{r}
+# Distribution of support 2
+ggplot(study1, aes(x=support2)) + geom_bar() + labs(title="Distribution of support for LGBT+ inclusive education", x="Stance on LGBT+ inclusive education", y="Frequency")
+```
+The distribution of support for LGBT+ inclusive education is skewed towards the positive side, with most respondents supporting LGBT+ inclusive education. Just to be sure that 0 stands for opposition and 1 for support, I also visualized the distribution of support2.
+
+Selecting covariates:
+I pick the following covariates for the analysis:
+- age: Age is often associated with a change in political attitudes over time -> age (numeric) or agecat (categorical) -> I pick age so that I have a continuous variable in the analysis
+- gender: Gender is associated with different attitudes towards LGBT+ rights and immigration and could impact that relationship as well -> I pick gender (categorical, Man, Woman), as it is a binary variable and make things less complicated
+- sexual identity/orientation: I expect that identifying as LGBT+ will have a big influence on the relationship of attitudes towards LGBT+ inclusive education and exposure to the treatment-> I pick the variable queer (categorical, Heterosexual, Not heterosexual) as it is a binary variable and makes things less complicated.
+- race: not being white (in the case of the UK) might result in different attitudes towards LGBT+ inclusive education -> I pick the variable nonwhite.
+
+Age:
+```{r}
+#Visualizing the distribution of age
+ggplot(study1, aes(x=age)) + geom_histogram(binwidth = 1) + scale_x_continuous() + labs(title="Distribution of age", x="Age", y="Frequency"))
+```
+```{r}
+#Visualizing the distribution of agecat
+ggplot(study1, aes(x=agecat)) + geom_bar() + labs(title="Distribution of age", x="Age Cohort", y="Frequency")
+```
+The distribution of age is skewed towards older respondents, with most respondents being in their 30s and above. Note: 
+
+Gender:
+```{r}
+#Visualizing the distribution of Gender (Man, Woman)
+ggplot(study1, aes(x=gender)) + geom_bar() + 
+  labs(title="Distribution of gender", x="Gender", y="Frequency")
+```
+There are slightly more Men than Women in the sample, but overall they are distributed evenly.
+
+Sexual Identity:
+```{r}
+#Visualizing the distribution of queer
+ggplot(study1, aes(x=queer)) + geom_bar() + 
+  labs(title="Distribution of sexual identity", x="Sexual Identity", y="Frequency")
+```
+The large majority of respondents identify as heterosexual, with only a small minority identifying as not heterosexual.
+
+Data Cleaning/transformation if necessary:
+
+
 
 Exercise 3: Covariate Balance
 Check for balance across covariates and report the results in a table and a plot.
 Explain your findings. Why would you expect randomization to lead to balance across covariates?
 
+```{r}
+#Checking for balance across covariates
+# Load necessary libraries
+library(dplyr)
+library(ggplot2)
+install.packages("tableone")
+library(tableone)
+
+# Assuming the dataset is named `study1_data`
+# and has columns `treatment` (1 = treated, 0 = control),
+# `gender`, `age`, and `queer`
+
+# Step 1: Create a Balance Table
+# Convert treatment to a factor for easier comparison
+study1$treatment <- as.factor(study1$treatment)
+
+# Define covariates and treatment
+covariates <- c("gender", "age", "queer")
+treatment <- "treatment"
+
+# Generate a summary table for covariate balance
+balance_table <- CreateTableOne(vars = covariates, strata = treatment, data = study1, test = FALSE)
+print(balance_table)
+
+# Step 2: Calculate Standardized Mean Differences (SMD)
+# Extract SMDs from balance_table
+smd_values <- ExtractSmd(balance_table)
+print(smd_values)
+
+### length names are not the same
+### error note!
+
+length(names(smd_values))
+length(unlist(smd_values))
+
+# Step 3: Plotting Balance with Standardized Mean Differences
+# Converting SMDs to a data frame for plotting
+smd_df <- data.frame(
+  covariate = names(smd_values),
+  smd = unlist(smd_values)
+)
+
+# Plotting the SMDs
+ggplot(smd_df, aes(x = covariate, y = smd)) +
+  geom_bar(stat = "identity", fill = "skyblue") +
+  geom_hline(yintercept = 0.1, linetype = "dashed", color = "red") +
+  labs(title = "Covariate Balance Check using Standardized Mean Differences",
+       y = "Standardized Mean Difference (SMD)", x = "Covariates") +
+  theme_minimal()
+```
 
 
 Exercise 4 (additional): Estimate Treatment Effect

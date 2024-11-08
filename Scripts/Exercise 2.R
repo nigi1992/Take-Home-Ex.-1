@@ -6,22 +6,28 @@
 #If necessary, clean or transform variables. Document any changes.
 
 # IV: treatment - being shown Muslim Names and Pictures (Yes/No)
-# Operationalization: 
+# Operationalization: treatment (0,1)
 
 # Most important confounding variable: Immigrant Attitudes
-# Operationalization: 
+# Operationalization: imm_1 (ordinal scale 0-10) or immbelow (for binary distribution)
 
 # DV: support for LGBT+ inclusive education (0-11 range, scale order randomized) -> transformation to
-# 0-1 range for easier interpretation.
+# 0-1 range for easier interpretation. 
+# Opernationalization (0,1)
 
 from csv table:
-  IV: outcome_treat, treatment
-  CV: imm_1, imm_2, imm1mean, immbelow, imm3, 
-  DV: support
+  Treatment variable: outcome_treat (categorical or nominal, NAs), treatment (binary),
+  immigration attitudes: imm_1, imm_2, (both ordinal or numeric) imm1mean (continous), immbelow (binary), imm3 (ordinal), 
+  DV: support (binary), support2 (categorical)
+
+Treatment variable: treatment -> treat (cat.), treatnum (binary)
+immigration attitudes: immbelow (cat.), imm_1 (ordinal)
+DV: support
 
 df <-df%>% 
-  mutate(treat= as.factor(treatment),
-         treatnum= as.numeric(treatment),
+  mutate(treat= as.factor(treatment), --> convert to factor (categorical data)
+         treatnum= as.numeric(treatment), --> convert to numeric
+         [...]
          immbelow= as.factor(immbelow),
          imm3= as.factor(imm3),
          
