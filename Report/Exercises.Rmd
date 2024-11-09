@@ -46,38 +46,38 @@ A look at the Csv table revealed the following variables as of interest for the 
 By also looking at the study1.R script in the code chunk below, I can see that the following variables are of interest for the replication, while the rest can likely be ignored:
 
 ```{r}
-df <-df%>% 
-  mutate(treat= as.factor(treatment), --> convert to factor (categorical data)
-         treatnum= as.numeric(treatment), --> convert to numeric
+#df <-df%>% 
+  #mutate(treat= as.factor(treatment), --> convert to character type (categorical data)
+         #treatnum= as.numeric(treatment), --> convert to numeric type (continuous data)
          #[...]
-         immbelow= as.factor(immbelow),
-         imm3= as.factor(imm3),
+         #immbelow= as.factor(immbelow),
+         #imm3= as.factor(imm3),
          
 ##Figure 3## 
 
-model1<- glm (support ~ treat*imm_1, data=df, family="binomial")
-summ(model1, robust=TRUE)
-df$predictINT1<-predict(model1, df, type="response")
+#model1<- glm (support ~ treat*imm_1, data=df, family="binomial")
+#summ(model1, robust=TRUE)
+#df$predictINT1<-predict(model1, df, type="response")
 
-treat <- subset(df, treatnum==1)
-control <- subset(df, treatnum==0)
-proimm <- subset(df, immbelow==0)
-noproimm <- subset(df, immbelow==1)
+#treat <- subset(df, treatnum==1)
+#control <- subset(df, treatnum==0)
+#proimm <- subset(df, immbelow==0)
+#noproimm <- subset(df, immbelow==1)
 
 ##FIGURE 4##
 
-modelsub1<- lm (support ~ treat, data=proimm)
-summ(modelsub1, robust=TRUE)
-proimm$predictedb<-predict(modelsub1, proimm)
+#modelsub1<- lm (support ~ treat, data=proimm)
+#summ(modelsub1, robust=TRUE)
+#proimm$predictedb<-predict(modelsub1, proimm)
 
-modelsub2<- lm (support ~ treat, data=noproimm)
-summ(modelsub2, robust=TRUE)
-noproimm$predictedb<-predict(modelsub2, noproimm)
+#modelsub2<- lm (support ~ treat, data=noproimm)
+#summ(modelsub2, robust=TRUE)
+#noproimm$predictedb<-predict(modelsub2, noproimm)
 
-treatsub1 <- subset(proimm, treatnum==1)
-controlsub1 <- subset(proimm, treatnum==0)
-treatsub2 <- subset(noproimm, treatnum==1)
-controlsub2 <- subset(noproimm, treatnum==0)
+#treatsub1 <- subset(proimm, treatnum==1)
+#controlsub1 <- subset(proimm, treatnum==0)
+#treatsub2 <- subset(noproimm, treatnum==1)
+#controlsub2 <- subset(noproimm, treatnum==0)
 ```
 
 - Treatment variable: treatment: is transformed twofold -> treat (converted to cat. variable for model transformation), treatnum (converted to numeric binary variable for graph)
@@ -93,15 +93,24 @@ From this I conclude that the following variables are of interest for the replic
 
 Below I will provide visualizations of the distribution of these variables. Let's start with the treatment variable:
 ```{r}
-#Loading Data Set
-study1 <- read.csv("/Users/nicolaswaser/New-project-GitHub-first/R/Take-Home-Ex.-1/Input Data/study1_data.csv",)
+# Loading Data Set
+study1 <- read.csv("/Users/nicolaswaser/New-project-GitHub-first/R/Take-Home-Ex.-1/Input Data/study1_data.csv")
 
-# Get idea of variable distribution in the form of a table
+# Variable distribution in the form of a table
 table(study1$treatment)
 ```
-
+Data Transformation of treatment variable for better visualization
 ```{r}
-#Visualizing the distribution of the treatment variable
+is.factor(study1$treatment)
+
+study1 <-study1%>% 
+  mutate(treatment= as.factor(treatment))
+
+is.factor(study1$treatment)
+```
+Visualizing the distribution of the treatment variable
+```{r}
+# Visualizing the distribution of the treatment variable
 ggplot(study1, aes(x=treatment)) + geom_bar() + labs(title="Distribution of Treatment Variable", x="Treatment", y="Frequency")
 ```
 Unsurprisingly, the treatment variable is distributed evenly across the two groups, as it should be in a randomized experiment. 
@@ -111,25 +120,44 @@ table(study1$imm_1)
 ```
 
 ```{r}
-#Visualizing the distribution of imm_1
+# Visualizing the distribution of imm_1
 ggplot(study1, aes(x=imm_1)) + geom_bar() + labs(title="Distribution of attitudes towards immigrants", x="Attitudes towards immigrants (from negative to positive)", y="Frequency")
 ```
 The distribution of attitudes towards immigrants is skewed towards the positive side, with most respondents having a positive attitude. Note: 0 values equal to NAs, which is why the distribution starts at 1.
 For later purposes, I will also visualize the distribution of the binary variable immbelow:
+
 ```{r}
-#Visualizing the distribution of immbelow
+# Transforming immbelow and support to factor for better visualization
+study1 <-study1%>% 
+  mutate(immbelow= as.factor(immbelow),
+         support= as.factor(support))
+is.factor(study1$immbelow)
+is.factor(study1$support)
+```
+
+```{r}
+# Visualizing the distribution of immbelow
 ggplot(study1, aes(x=immbelow)) + geom_bar() + labs(title="Distribution of Pro- vs. Anti-immigration attitudes", x="Pro- (0) vs. Anti- (1) immigration", y="Frequency")
 ```
-There are slightly more Pro-immigration than Anti-immigration sentiments in the sample. This is also in line with the graph from above. 
+There are slightly more Pro-immigration than Anti-immigration sentiments in the sample. This is also in line with the graph from above.
+```{r}
+table(study1$immbelow)
+```
+
 Lastly, I will visualize the distribution of the DV support for LGBT+ inclusive education:
 ```{r}
-#Visualizing the distribution of support for LGBT+ inclusive education
+# Visualizing the distribution of support for LGBT+ inclusive education
 ggplot(study1, aes(x=support)) + geom_bar() + labs(title="Distribution of support for LGBT+ inclusive education", x="Supports LGBT+ inclusive education, No (0), Yes (1)", y="Frequency")
 ```
 ```{r}
 # Distribution of support 2
 ggplot(study1, aes(x=support2)) + geom_bar() + labs(title="Distribution of support for LGBT+ inclusive education", x="Stance on LGBT+ inclusive education", y="Frequency")
 ```
+```{r}
+table(study1$support2)
+#table(study1$support)
+```
+
 The distribution of support for LGBT+ inclusive education is skewed towards the positive side, with most respondents supporting LGBT+ inclusive education. Just to be sure that 0 stands for opposition and 1 for support, I also visualized the distribution of support2.
 
 Selecting covariates:
@@ -137,37 +165,88 @@ I pick the following covariates for the analysis:
 - age: Age is often associated with a change in political attitudes over time -> age (numeric) or agecat (categorical) -> I pick age so that I have a continuous variable in the analysis
 - gender: Gender is associated with different attitudes towards LGBT+ rights and immigration and could impact that relationship as well -> I pick gender (categorical, Man, Woman), as it is a binary variable and make things less complicated
 - sexual identity/orientation: I expect that identifying as LGBT+ will have a big influence on the relationship of attitudes towards LGBT+ inclusive education and exposure to the treatment-> I pick the variable queer (categorical, Heterosexual, Not heterosexual) as it is a binary variable and makes things less complicated.
-- race: not being white (in the case of the UK) might result in different attitudes towards LGBT+ inclusive education -> I pick the variable nonwhite.
+- race: not being white (in the case of the UK) might result in different attitudes towards LGBT+ inclusive education. I also wanted to add a non-binary categorical variable -> I pick the variable race.
 
 Age:
 ```{r}
-#Visualizing the distribution of age
-ggplot(study1, aes(x=age)) + geom_histogram(binwidth = 1) + scale_x_continuous() + labs(title="Distribution of age", x="Age", y="Frequency"))
+table(study1$agecat)
+```
+Data Cleaning: There are 3 Nas in the data frame that affect all the covariates I selected. I will remove from the data set.
+
+```{r}
+# Showing rows with NAs in the columns of interest
+nas_by_column <- colSums(is.na(study1[, c("age", "agecat", "gender", "queer", "race")]))
+print(nas_by_column)
+
+rows_with_nas <- which(rowSums(is.na(study1[, c("age", "agecat", "gender", "queer")])) > 0)
+print(rows_with_nas)
+
+# Removing the rows with NAs
+study1_cleaned <- study1[-rows_with_nas, ]
+
+# Verifying the rows have been removed
+print(nrow(study1))
+print(nrow(study1_cleaned))
+```
+
+
+```{r}
+# Visualizing the distribution of age
+ggplot(study1_cleaned, aes(x=age)) + geom_histogram(binwidth = 1) + scale_x_continuous() + labs(title="Distribution of age", x="Age", y="Frequency")
 ```
 ```{r}
-#Visualizing the distribution of agecat
-ggplot(study1, aes(x=agecat)) + geom_bar() + labs(title="Distribution of age", x="Age Cohort", y="Frequency")
+# Visualizing the distribution of agecat
+ggplot(study1_cleaned, aes(x=agecat)) + geom_bar() + labs(title="Distribution of age", x="Age Cohort", y="Frequency")
 ```
-The distribution of age is skewed towards older respondents, with most respondents being in their 30s and above. Note: 
+The distribution of age is skewed towards older respondents, with most respondents being in their 30s and above.
 
 Gender:
 ```{r}
-#Visualizing the distribution of Gender (Man, Woman)
-ggplot(study1, aes(x=gender)) + geom_bar() + 
+table(study1_cleaned$gender)
+```
+
+```{r}
+# Visualizing the distribution of Gender (Man, Woman)
+ggplot(study1_cleaned, aes(x=gender)) + geom_bar() + 
   labs(title="Distribution of gender", x="Gender", y="Frequency")
 ```
 There are slightly more Men than Women in the sample, but overall they are distributed evenly.
 
 Sexual Identity:
 ```{r}
-#Visualizing the distribution of queer
-ggplot(study1, aes(x=queer)) + geom_bar() + 
+table(study1_cleaned$queer)
+```
+
+```{r}
+# Visualizing the distribution of queer
+ggplot(study1_cleaned, aes(x=queer)) + geom_bar() + 
   labs(title="Distribution of sexual identity", x="Sexual Identity", y="Frequency")
 ```
 The large majority of respondents identify as heterosexual, with only a small minority identifying as not heterosexual.
 
-Data Cleaning/transformation if necessary:
+Race:
+```{r}
+table(study1_cleaned$race)
+```
 
+```{r}
+# Visualizing the distribution of Race
+ggplot(study1_cleaned, aes(x=race)) + geom_bar() + 
+  labs(title="Distribution of different Races", x="Race", y="Frequency")
+```
+
+Data Transformation, if necessary:
+```{r}
+# Transforming treatment to factor
+is.factor(study1_cleaned$treatment)
+
+study1_cleaned_transformed <-study1_cleaned%>% 
+  mutate(treatment= as.factor(treatment))
+
+is.factor(study1_cleaned_transformed$treatment)
+
+#data$treatment <- factor(data$treatment, levels = c(0, 1), labels = c("Control", "Treatment"))
+```
 
 
 Exercise 3: Covariate Balance
@@ -175,54 +254,102 @@ Check for balance across covariates and report the results in a table and a plot
 Explain your findings. Why would you expect randomization to lead to balance across covariates?
 
 ```{r}
-#Checking for balance across covariates
-# Load necessary libraries
+# Checking for balance across covariates
+# Loading necessary libraries
 library(dplyr)
 library(ggplot2)
 install.packages("tableone")
 library(tableone)
+library(knitr)
 
-# Assuming the dataset is named `study1_data`
-# and has columns `treatment` (1 = treated, 0 = control),
-# `gender`, `age`, and `queer`
+# Specifying the treatment variable and covariates
+treatment_var <- "treatment"
+covariates <- c("gender", "age", "queer", "race")
 
-# Step 1: Create a Balance Table
-# Convert treatment to a factor for easier comparison
-study1$treatment <- as.factor(study1$treatment)
+# Creating a balance table using 'CreateTableOne' from the tableone package
+# This will show means and standard deviations (or medians, counts) by treatment group
+balance_table <- CreateTableOne(vars = covariates, strata = treatment_var, data = study1_cleaned_transformed, test = TRUE)
 
-# Define covariates and treatment
-covariates <- c("gender", "age", "queer")
-treatment <- "treatment"
+print(balance_table, smd = TRUE)  # SMD = standardized mean differences
+```
+Treatment group outcome statistically distinct at: * p < 0.1, ** p < 0.05, *** p < 0.01
+The sample size in each treatment group is n = 574 participants per group.
 
-# Generate a summary table for covariate balance
-balance_table <- CreateTableOne(vars = covariates, strata = treatment, data = study1, test = FALSE)
-print(balance_table)
+Distribution of covariates across treatment groups:
+- gender (Woman): In terms of gender distribution the sample is quite balanced with women accounting for about 52% in both treatment groups 
+- age: The mean age is slightly different with 48.06 years for group 0 and 46.98 years for group 1, but this difference is minor.
+- queer (Not heterosexual): The proportion of participants identifying as “Not heterosexual” is 9.1% in group 0 and 10.5% in group 1 and therefore quite well balanced.
+- Distribution of race across treatment groups is consistent:
+	-	Asian: 7.0% in each group
+	-	Black: 3.7% in group 0 and 3.0% in group 1
+	-	Mixed: 5.1% in group 0 and 5.2% in group 1
+	-	Other: 1.0% in group 0 and 1.6% in group 1
+	-	White: 83.3% in both groups 
+  Although there are small variations in the counts of some racial groups, these differences are not statistically significant.
 
-# Step 2: Calculate Standardized Mean Differences (SMD)
-# Extract SMDs from balance_table
-smd_values <- ExtractSmd(balance_table)
-print(smd_values)
+All SMD Values are well below 0.1, which typically indicates that covariates are well-balanced between groups. Also, none of the p-values are significant, meaning there are no statistically significant differences in these covariates between groups, which further confirms balance.
 
-### length names are not the same
-### error note!
+Why Randomization Should Lead to Balance:
+In randomized experiments, each participant has an equal probability of being assigned to any treatment group. This process should, on average, distribute participants with different covariate values equally across treatment groups. Since the distribution of covariates is similar, any observed effects are more likely attributable to the treatment rather than pre-existing differences. Some minor imbalance can still occur due to random chance, but with sufficiently large sample sizes (as is the case here), these differences should be minimal, as seen in the low SMDs.
 
-length(names(smd_values))
-length(unlist(smd_values))
+Considering the table, the results confirm that randomization has effectively created comparable groups across gender, age, and queer. This balanced setup make it possible to assess the treatment effect with confidence, knowing that pre-treatment covariate differences are not driving any observed outcome differences.
 
-# Step 3: Plotting Balance with Standardized Mean Differences
-# Converting SMDs to a data frame for plotting
-smd_df <- data.frame(
-  covariate = names(smd_values),
-  smd = unlist(smd_values)
-)
+Plots for all Covariates across treatment groups:
+```{r}
+# Plotting the distribution of covariates by treatment group
 
-# Plotting the SMDs
-ggplot(smd_df, aes(x = covariate, y = smd)) +
-  geom_bar(stat = "identity", fill = "skyblue") +
-  geom_hline(yintercept = 0.1, linetype = "dashed", color = "red") +
-  labs(title = "Covariate Balance Check using Standardized Mean Differences",
-       y = "Standardized Mean Difference (SMD)", x = "Covariates") +
-  theme_minimal()
+# Checking the data types of covariates
+is.numeric(study1_cleaned_transformed$age)
+typeof(study1_cleaned_transformed$age)
+is.factor(study1_cleaned_transformed$treatment)
+typeof(study1_cleaned_transformed$treatment)
+is.factor(study1_cleaned_transformed$gender)
+is.factor(study1_cleaned_transformed$queer)
+is.factor(study1_cleaned_transformed$race)
+
+typeof(study1_cleaned_transformed$gender)
+typeof(study1_cleaned_transformed$queer)
+typeof(study1_cleaned_transformed$race)
+#as.factor(study1_cleaned$treatment)
+
+# Looping through covariates
+for (covariate in covariates) {
+  if (is.numeric(study1_cleaned_transformed[[covariate]]) && length(unique(study1_cleaned_transformed[[covariate]])) > 2) {
+    # boxpolot for continuous covariates
+    p <- ggplot(data = study1_cleaned_transformed, aes(x = .data[[treatment_var]], y = !!sym(covariate))) +
+      geom_boxplot() +
+      labs(title = paste("Distribution of", covariate, "by Treatment Group"),
+           x = "Treatment Group", y = covariate) +
+      theme_minimal()
+  } else {
+    # bar plot for binary covariates
+    p <- ggplot(data = study1_cleaned_transformed, aes(x = .data[[treatment_var]], fill = factor(!!sym(covariate)))) +
+      geom_bar(position = "fill") +
+      labs(title = paste("Proportion of", covariate, "by Treatment Group"),
+           x = "Treatment Group", y = "Proportion", fill = covariate) +
+      theme_minimal()
+  }
+  
+  print(p)
+}
+```
+All the plots show nicely that samples are evenly distributed across both treatment groups.
+
+T-test for age and treatment
+```{r}
+# T-test for continuous variable age
+t_test_age <- t.test(age ~ treatment, data = study1_cleaned_transformed)
+print(t_test_age)
+```
+Fisher's exact test for queer and treatment (when sample size or expected cell counts are small, Fisher's exact test is more appropriate than the chi-square test)
+```{r}
+# Fisher's exact test for queer and treatment
+fisher.test(table(study1_cleaned_transformed$queer, study1_cleaned_transformed$treatment))
+```
+Chi-square for race and treatment
+```{r}
+# Chi-square test for categorical variables race and treatment
+chisq.test(table(study1_cleaned_transformed$race, study1_cleaned_transformed$treatment))
 ```
 
 
@@ -234,3 +361,212 @@ regression model. Compare your results to those in the original paper.
 Then, repeat this analysis with three iteratively smaller random samples of the treatment 
 (n = 200, n = 100, n = 10) and control groups (n = 200, n = 100, n = 10); total N = 400, 200, and 20, respectively. Explain your findings.
 Finally, discuss how sample size impacts the results and what this implies about the role of randomization for selection bias.
+
+```{r}
+# Estimating the average effect of the treatment on the outcome variable support conditional on the pre-treatment variable imm_1
+
+# Mutating data for OLS Regression
+Study1_OLS <-study1_cleaned_transformed%>% 
+  mutate(treat= as.factor(treatment))
+
+# Using an interaction term in an OLS regression model
+OLS_model <- lm(support ~ treat*imm_1, data = Study1_OLS)
+summary(OLS_model, robust=TRUE)
+
+#summ(model1, robust=TRUE)
+#df$predictINT1<-predict(model1, df, type="response")
+```
+The model suggests that treat, imm_1, and the interaction between them all significantly influence support.The treatment (treat1) has a positive effect, and higher values of imm_1 also increase the likelihood of support. The negative interaction term suggests that the effect of imm_1 on support is slightly weaker when the treatment is applied. Although all the predictors are significant, the model explains only a modest proportion of the variance in the outcome.
+
+My results are quite similar to those of Model 2 in the original paper!
+
+Results from study1 in the original paper:
+|                  | Model 1  | Model 2  | Model 3  | Model 4  |
+|------------------|----------|----------|----------|----------|
+| (Intercept)      | 0.642*** | 0.238*** | 0.830*** | 0.447*** |
+|                  | (0.020)  | (0.042)  | (0.023)  | (0.030)  |
+| treat1           | 0.022    | 0.148**  | -0.056*  | 0.097**  |
+|                  | (0.028)  | (0.058)  | (0.033)  | (0.042)  |
+| imm_1            |          | 0.065*** |          |          |
+|                  |          | (0.006)  |          |          |
+| treat1 × imm_1   |          | -0.019** |          |          |
+|                  |          | (0.009)  |          |          |
+| Num.Obs.         | 1151     | 1151     | 595      | 556      |
+| R2               | 0.001    | 0.134    | 0.005    | 0.009    |
+| R2 Adj.          | 0.000    | 0.132    | 0.003    | 0.008    |
+| AIC              | 1562.5   | 1401.5   | 597.5    | 807.8    |
+| BIC              | 1577.6   | 1426.8   | 610.6    | 820.7    |
+| Log.Lik.         | -778.230 | -695.762 | -295.727 | -400.880 |
+| RMSE             | 0.48     | 0.44     | 0.40     | 0.50     |
+Note: * p < 0.1, ** p < 0.05, *** p < 0.01
+
+For Model 2, they used a similar code as me: "models2 [['Model 2']] <-lm (support ~ treat*imm_1, data=df)"
+
+Comparison:
+|                  | My Model | Model 2 from paper |
+|------------------|----------|----------|
+| (Intercept)      | 0.240*** | 0.238*** | 
+|                  |  (0.041) |  (0.042) | 
+| treat1           | 0.146*   | 0.148**  | 
+|                  |  (0.058) |  (0.058) |
+| imm_1            | 0.065*** | 0.065*** | 
+|                  |  (0.006) |  (0.006) | 
+| treat1 × imm_1   | -0.019*  | -0.019** |
+|                  |  (0.008) |  (0.009) |
+
+| Num.Obs.         | 1148     | 1151     | 
+| R2               | 0.132    | 0.134    |
+| R2 Adj.          | 0.135    | 0.132    |
+| RMSE             | 0.44     | 0.44     |
+Note: * p < 0.1, ** p < 0.05, *** p < 0.01
+
+The results are quite similar, with the coefficients for treat1 and imm_1 being almost identical. The p-values are also very close, with the coefficient for treat1 being significant at the 5% level in both models. The coefficient for the interaction term treat1*imm_1 is also significant at the 5% level in both models. Minor differences in significance levels are likely due to small variations in standard errors and the slightly smaller sample in my model. The overall similarity in coefficients and model fit measures indicates that the results are robust and aligned. Both models suggest a moderate positive effect of treatment on support, a strong positive association with imm_1, and a small dampening effect of treatment on the relationship between imm_1 and support.
+
+	
+Estimating ATE with crude OLS measurement:
+```{r}
+# Calculate the treatment effect for each observation in the data
+Study1_OLS$TE <- 0.146177 + (-0.019038 * Study1_OLS$imm_1)
+
+# Calculate the average estimated treatment effect
+ATE <- mean(Study1_OLS$TE)
+ATE
+```
+
+Estimating ATE with crude method:
+```{r}
+E_S_T_1 <- study1_cleaned_transformed %>% filter(treatment==1) %>% summarise(conditional_mean = mean(support))
+E_S_T_0 <- study1_cleaned_transformed %>% filter(treatment==0) %>% summarise(conditional_mean = mean(support))
+ATE_filter <- E_S_T_1 - E_S_T_0
+names(ATE_filter) <- c("ATE_filter")
+ATE_filter
+```
+
+Repeat the analysis with three iteratively smaller random samples of the treatment (n = 200, n = 100, n = 10) and control groups (n = 200, n = 100, n = 10); total N = 400, 200, and 20, respectively.
+
+n = 400:
+```{r}
+# n = 400:
+
+# Function to create balanced samples and run regression
+create_balanced_sample <- function(data, n_per_group) {
+  # Spliting data into treatment and control
+  treat_data <- subset(data, treat == 1)
+  control_data <- subset(data, treat == 0)
+  
+  # Sample equally from each group
+  set.seed(123)  # for reproducibility
+  treat_sample <- treat_data[sample(nrow(treat_data), n_per_group), ]
+  control_sample <- control_data[sample(nrow(control_data), n_per_group), ]
+  
+  # Combining samples
+  balanced_sample <- rbind(treat_sample, control_sample)
+  
+  return(balanced_sample)
+}
+
+# Balance Check Function for each sample
+check_balance <- function(sample_data) {
+  # Checking treatment distribution
+  print("Treatment distribution:")
+  print(table(sample_data$treat))
+  
+  # Checking means of key variables by treatment group
+  print("Means by treatment group:")
+  aggregate(cbind(support, imm_1) ~ treat, data = sample_data, mean)
+}
+
+# n = 400:
+
+# Creating sample of n = 400
+sample_400 <- create_balanced_sample(Study1_OLS, 200)  # 200 per group = 400 total
+
+# Running regression on sample of n = 400
+model_400 <- lm(support ~ treat*imm_1, data = sample_400)
+
+# Checking balance for N=400
+print("Balance check for N=400:")
+check_balance(sample_400)
+
+# Printing summary
+print("Results for N=400:")
+summary(model_400)
+```
+n = 200:
+```{r}
+# Creating samples of different sizes
+sample_200 <- create_balanced_sample(Study1_OLS, 100)  # 100 per group = 200 total
+
+# Running regressions on each sample
+model_200 <- lm(support ~ treat*imm_1, data = sample_200)
+
+# Checking balance in each sample
+print("Balance check for N=200:")
+check_balance(sample_200)
+
+# Printing summaries
+print("Results for N=200:")
+summary(model_200)
+```
+n = 20:
+```{r}
+# Creating samples of different sizes
+sample_20 <- create_balanced_sample(Study1_OLS, 10)    # 10 per group = 20 total
+
+# Running regressions on each sample
+model_20 <- lm(support ~ treat*imm_1, data = sample_20)
+
+# Checking balance in each sample
+print("Balance check for N=20:")
+check_balance(sample_20)
+
+# Printing summaries
+print("Results for N=20:")
+summary(model_20)
+```
+Regression table for all sample sizes:
+```{r}
+# All regressions in one table
+install.packages("stargazer")
+library(stargazer)
+stargazer(OLS_model, model_400, model_200, model_20, type = "text", label = "tab:regressions", title = "Regression Results for Different Sample Sizes")
+```
+Treatment Effect (treat1): As sample size decreases, the effect of treatment on support grows larger, but standard errors increase, while statistical significance fluctuates. This suggests that smaller samples are less precise and more prone to random fluctuations in treatment effect estimates. 
+Similar observations can be made for R-squared and adjusted R-squared values and F-Values, which all decrease as sample size decreases.
+
+The findings illustrate that larger sample sizes provide more stable and precise estimates. As sample size decreases, estimates for treatment and the interaction term become increasingly variable, with higher standard errors and changing significance levels. This instability suggests that smaller samples may fail to capture the true treatment effect accurately, leading to over- or underestimation of effects.
+When it comes to random sampling and random assignment in experiments, they typically reduce selection bias. However, in smaller samples, the risk of imbalances in covariates increases even with randomization, because smaller groups are more prone to random variation that may not reflect the population accurately. For example, the inflated treatment effect observed with the smallest sample size (20 observations) likely reflects random sampling noise rather than a genuine increase in the treatment effect. This implies that randomization alone is insufficient to prevent selection bias in small samples. Adequate sample size is necessary to ensure that randomization leads to balanced groups and that results are generalizable.
+
+```{r}
+#df <-df%>% 
+ # mutate(treat= as.factor(treatment),
+    #     treatnum= as.numeric(treatment),
+    #     immbelow= as.factor(immbelow)
+         
+##Figure 3## 
+
+#model1<- glm (support ~ treat*imm_1, data=df, family="binomial")
+#summ(model1, robust=TRUE)
+#df$predictINT1<-predict(model1, df, type="response")
+
+#treat <- subset(df, treatnum==1)
+#control <- subset(df, treatnum==0)
+#proimm <- subset(df, immbelow==0)
+#noproimm <- subset(df, immbelow==1)
+
+##FIGURE 4##
+
+#modelsub1<- lm (support ~ treat, data=proimm)
+#summ(modelsub1, robust=TRUE)
+#proimm$predictedb<-predict(modelsub1, proimm)
+
+#modelsub2<- lm (support ~ treat, data=noproimm)
+#summ(modelsub2, robust=TRUE)
+#noproimm$predictedb<-predict(modelsub2, noproimm)
+
+#treatsub1 <- subset(proimm, treatnum==1)
+#controlsub1 <- subset(proimm, treatnum==0)
+#treatsub2 <- subset(noproimm, treatnum==1)
+#controlsub2 <- subset(noproimm, treatnum==0)
+```
+
