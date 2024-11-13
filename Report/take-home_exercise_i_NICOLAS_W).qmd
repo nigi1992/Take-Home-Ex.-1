@@ -1,3 +1,7 @@
+```{r}
+options(repos = c(CRAN = "https://cloud.r-project.org")) # set CRAN mirror
+```
+
 ---
 title: "Take Home Exercise 1"
 subtitle: "Replicating an Experimental Study (THE 1)"
@@ -18,7 +22,7 @@ editor:
 summary of the paper you are replicating. Describe the main findings,
 especially those related to Study 1.*
 
-*Disclaimer. For this exercise I made use of the following AI Generation
+*Disclaimer! For this exercise I made use of the following AI Generation
 tools: Deepl.com for translation purposes, the integrated Copilot tool
 in R Studio for generating code and text and the free versions of
 OpenAI's GPT-4o Mini, Anthropics Claude 3.5 Sonnet and Mistral's
@@ -125,6 +129,7 @@ while the rest can likely be ignored:
          #[...]
          #immbelow= as.factor(immbelow),
          #imm3= as.factor(imm3),
+
 ##Figure 3## 
 #model1<- glm (support ~ treat*imm_1, data=df, family="binomial")
 #summ(model1, robust=TRUE)
@@ -133,17 +138,6 @@ while the rest can likely be ignored:
 #control <- subset(df, treatnum==0)
 #proimm <- subset(df, immbelow==0)
 #noproimm <- subset(df, immbelow==1)
-##FIGURE 4##
-#modelsub1<- lm (support ~ treat, data=proimm)
-#summ(modelsub1, robust=TRUE)
-#proimm$predictedb<-predict(modelsub1, proimm)
-#modelsub2<- lm (support ~ treat, data=noproimm)
-#summ(modelsub2, robust=TRUE)
-#noproimm$predictedb<-predict(modelsub2, noproimm)
-#treatsub1 <- subset(proimm, treatnum==1)
-#controlsub1 <- subset(proimm, treatnum==0)
-#treatsub2 <- subset(noproimm, treatnum==1)
-#controlsub2 <- subset(noproimm, treatnum==0)
 ```
 
 -   Treatment variable: treatment is transformed twofold -\> treat
@@ -174,8 +168,8 @@ bar plot of the distribution of the treatment variable.
 
 ```{r}
 study1 <- 
-  read.csv("/Users/nicolaswaser/New-project-GitHub-first/R/Take-Home-Ex.-1/
-    Input Data/study1_data.csv") # Please insert your own data path to run
+  read.csv("/Users/nicolaswaser/New-project-GitHub-first/R/Take-Home-Ex.-1/Input Data/study1_data.csv") 
+### Please insert your own data path to run the code correctly ##
 library(tidyverse)
 library(ggplot2)
 #is.factor(study1$treatment)
@@ -350,15 +344,17 @@ study1_cleaned_transformed <-study1_cleaned%>%
 Checking for balance across covariates:
 
 ```{r}
+install.packages("dplyr")
 library(dplyr)
+install.packages("ggplot2")
 library(ggplot2)
 install.packages("tableone")
 library(tableone)
+install.packages("knitr")
 library(knitr)
 treatment_var <- "treatment"
 covariates <- c("gender", "age", "queer", "race")
-balance_table <- CreateTableOne(vars = covariates, strata = treatment_var, 
-                                data = study1_cleaned_transformed, test = TRUE)
+balance_table <- CreateTableOne(vars = covariates, strata = treatment_var, data = study1_cleaned_transformed, test = TRUE)
 print(balance_table, smd = TRUE)  # SMD = standardized mean differences
 ```
 
@@ -401,20 +397,6 @@ effectively created comparable groups across gender, age, and queer.
 This balanced setup make it possible to assess the treatment effect with
 confidence, knowing that pre-treatment covariate differences are not
 driving any observed outcome differences.
-
-```{r}
-#is.numeric(study1_cleaned_transformed$age)
-#typeof(study1_cleaned_transformed$age)
-#is.factor(study1_cleaned_transformed$treatment)
-#typeof(study1_cleaned_transformed$treatment)
-#is.factor(study1_cleaned_transformed$gender)
-#is.factor(study1_cleaned_transformed$queer)
-#is.factor(study1_cleaned_transformed$race)
-#typeof(study1_cleaned_transformed$gender)
-#typeof(study1_cleaned_transformed$queer)
-#typeof(study1_cleaned_transformed$race)
-#as.factor(study1_cleaned$treatment)
-```
 
 Plots for all Covariates across treatment groups:
 
@@ -491,9 +473,6 @@ Results from study1 in the original paper:
 ###| Num.Obs.         | 1151     | 1151     | 595      | 556      |
 ###| R2               | 0.001    | 0.134    | 0.005    | 0.009    |
 ###| R2 Adj.          | 0.000    | 0.132    | 0.003    | 0.008    |
-###| AIC              | 1562.5   | 1401.5   | 597.5    | 807.8    |
-###| BIC              | 1577.6   | 1426.8   | 610.6    | 820.7    |
-###| Log.Lik.         | -778.230 | -695.762 | -295.727 | -400.880 |
 ###| RMSE             | 0.48     | 0.44     | 0.40     | 0.50     |
 ###Note: * p < 0.1, ** p < 0.05, *** p < 0.01
 ```
@@ -538,9 +517,9 @@ effect of treatment on support, a strong positive association with
 imm_1, and a small dampening effect of treatment on the relationship
 between imm_1 and support.
 
-Repeat the analysis with three iteratively smaller random samples of the
-treatment (n = 200, n = 100, n = 10) and control groups (n = 200, n =
-100, n = 10); total N = 400, 200, and 20, respectively. n = 400:
+*Repeat the analysis with three iteratively smaller random samples of
+the treatment (n = 200, n = 100, n = 10) and control groups (n = 200, n
+= 100, n = 10); total N = 400, 200, and 20, respectively. n = 400:*
 
 ```{r}
 create_balanced_sample <- function(data, n_per_group) {
@@ -593,7 +572,13 @@ Regression table for all sample sizes:
 ```{r}
 install.packages("stargazer")
 library(stargazer)
-stargazer(OLS_model, model_400, model_200, model_20, type = "text", 
+stargazer(OLS_model, type = "text", 
+          label = "tab:regressions", 
+          title = "Regression Results for OG Sample")
+```
+
+```{r}
+stargazer(model_400, model_200, model_20, type = "text", 
           label = "tab:regressions", 
           title = "Regression Results for Different Sample Sizes")
 ```
