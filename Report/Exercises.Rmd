@@ -207,8 +207,7 @@ table(study1_cleaned$gender)
 
 ```{r}
 # Visualizing the distribution of Gender (Man, Woman)
-ggplot(study1_cleaned, aes(x=gender)) + geom_bar() + 
-  labs(title="Distribution of gender", x="Gender", y="Frequency")
+ggplot(study1_cleaned, aes(x=gender)) + geom_bar() + labs(title="Distribution of gender", x="Gender", y="Frequency")
 ```
 There are slightly more Men than Women in the sample, but overall they are distributed evenly.
 
@@ -219,8 +218,7 @@ table(study1_cleaned$queer)
 
 ```{r}
 # Visualizing the distribution of queer
-ggplot(study1_cleaned, aes(x=queer)) + geom_bar() + 
-  labs(title="Distribution of sexual identity", x="Sexual Identity", y="Frequency")
+ggplot(study1_cleaned, aes(x=queer)) + geom_bar() + labs(title="Distribution of sexual identity", x="Sexual Identity", y="Frequency")
 ```
 The large majority of respondents identify as heterosexual, with only a small minority identifying as not heterosexual.
 

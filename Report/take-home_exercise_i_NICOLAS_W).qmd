@@ -18,109 +18,31 @@ editor:
     wrap: 72
 ---
 
-***Exercise 1:** Summary of the Paper and Main Findings Provide a brief
-summary of the paper you are replicating. Describe the main findings,
-especially those related to Study 1.*
+***Exercise 1:** Summary of the Paper and Main Findings Provide a brief summary of the paper you are replicating. Describe the main findings, especially those related to Study 1.*
 
-*Disclaimer! For this exercise I made use of the following AI Generation
-tools: Deepl.com for translation purposes, the integrated Copilot tool
-in R Studio for generating code and text and the free versions of
-OpenAI's GPT-4o Mini, Anthropics Claude 3.5 Sonnet and Mistral's
-Codestral AI model for generating code and assisting me in solving the
-tasks.*
+*Disclaimer! For this exercise I made use of the following AI Generation tools: Deepl.com for translation purposes, the integrated Copilot tool in R Studio for generating code and text and the free versions of OpenAI's GPT-4o Mini, Anthropics Claude 3.5 Sonnet and Mistral's Codestral AI model for generating code and assisting me in solving the tasks.*
 
-The authors posit that according to the Homonationalist thesis, support
-for LGBT+ issues among anti-immigration nativists and right-wing
-populists is not entirely genuine (organic liberalism thesis) and is
-instead used strategically (instrumental liberalism thesis) as a tool to
-justify further exclusion of immigrants, especially Muslims, who are
-perceived to be more homophobic, than the average western citizen. The
-rational behind this could be summed up as: "The enemy of my enemy is my
-friend" or more drastically: "I hate them (Muslims) more than I hate the
-other group (LGBT+ people)". In order to test this hypothesis, the
-authors conducted two survey experiments in the UK and Spain. The
-dependent variable is "Support for LGBT+ inclusive education in school"
-and was measured by means of survey response on an order randomized
-scale from 0 to 11, but then for the sake of simplicity were turned into
-a dichotomous variable for support (0 or 1).
+The authors posit that according to the Homonationalist thesis, support for LGBT+ issues among anti-immigration nativists and right-wing populists is not entirely genuine (organic liberalism thesis) and is instead used strategically (instrumental liberalism thesis) as a tool to justify further exclusion of immigrants, especially Muslims, who are perceived to be more homophobic, than the average western citizen. The rational behind this could be summed up as: "The enemy of my enemy is my friend" or more drastically: "I hate them (Muslims) more than I hate the other group (LGBT+ people)". In order to test this hypothesis, the authors conducted two survey experiments in the UK and Spain. The dependent variable is "Support for LGBT+ inclusive education in school" and was measured by means of survey response on an order randomized scale from 0 to 11, but then for the sake of simplicity were turned into a dichotomous variable for support (0 or 1).
 
-In the UK, for study 1, the experimental research design randomly
-assigned 1200 participants into a control group and a treatment group.
-Those in the control group were exposed to text and pictures of
-nondenominational people with conventional British names protesting
-against LGBT+ inclusive education in schools. The treatment group was
-exposed to the same pictures and text, but the names and pictures were
-changed to appear Muslim. The authors expected that individuals who
-harbor negative predispositions toward immigration in the treatment
-group, will display more socially liberal preferences toward LGBT+
-education than individuals with comparable anti-immigrant sentiment in
-the control group. Indeed, the results showed that (with an average
-treatment effect of 9.7% points or a 22% increase against the baseline)
-respondents with an anti-immigrant disposition in the treatment group
-showed increased support for LGBT+ inclusive education in schools than
-comparable individuals in the control group. On the other hand, among
-those with positively predisposed toward immigration, treatment exhibits
-no significant effect below the 5% significance level. But overall, it
-can be said, that support for LGBT+ inclusive education is positively
-correlated with liberal attitudes towards immigrants.
+In the UK, for study 1, the experimental research design randomly assigned 1200 participants into a control group and a treatment group. Those in the control group were exposed to text and pictures of nondenominational people with conventional British names protesting against LGBT+ inclusive education in schools. The treatment group was exposed to the same pictures and text, but the names and pictures were changed to appear Muslim. The authors expected that individuals who harbor negative predispositions toward immigration in the treatment group, will display more socially liberal preferences toward LGBT+ education than individuals with comparable anti-immigrant sentiment in the control group. Indeed, the results showed that (with an average treatment effect of 9.7% points or a 22% increase against the baseline) respondents with an anti-immigrant disposition in the treatment group showed increased support for LGBT+ inclusive education in schools than comparable individuals in the control group. On the other hand, among those with positively predisposed toward immigration, treatment exhibits no significant effect below the 5% significance level. But overall, it can be said, that support for LGBT+ inclusive education is positively correlated with liberal attitudes towards immigrants.
 
-In Study 2, conducted in Spain, chosen because of generally more
-positive attitude levels towards immigration and LGBT+ issues than in
-the UK, and a right-wing populist party (VOX), that unlike its
-counter-part in the UK (UKIP), is not following a homonationalist
-strategy and is more openly outspoken against LGBT+ issues. They found
-that regardless of immigration sentiments, treatment resulted in an
-10-11% increase in support for LGBT+ inclusive education in schools.
-However, the effect was stronger among those with anti-immigrant
-sentiments (21% vs. 14%), when compared against the baseline.
-Furthermore, the authors also looked at shifts in citizens pride in
-"Western Culture". Only among individuals with nativist's views could
-they reasonably demonstrate increased levels of "pride in Western
-Culture" in the treatment group.
+In Study 2, conducted in Spain, chosen because of generally more positive attitude levels towards immigration and LGBT+ issues than in the UK, and a right-wing populist party (VOX), that unlike its counter-part in the UK (UKIP), is not following a homonationalist strategy and is more openly outspoken against LGBT+ issues. They found that regardless of immigration sentiments, treatment resulted in an 10-11% increase in support for LGBT+ inclusive education in schools. However, the effect was stronger among those with anti-immigrant sentiments (21% vs. 14%), when compared against the baseline. Furthermore, the authors also looked at shifts in citizens pride in "Western Culture". Only among individuals with nativist's views could they reasonably demonstrate increased levels of "pride in Western Culture" in the treatment group.
 
-With these findings in mind, the authors argue that the homonationalist
-thesis is correct and that the increased levels of support for LGBT+
-issues among the wider general public in western countries is not
-entirely genuine, but also in part the result of a strategic move by
-right-wing populists to deradicalize their image by defining themselves
-by "who they are not" rather than "who they are". They further speculate
-that as soon as the political context changes and LGBT+ rights are at
-stake (but absent of the perceived threat of "immigrants"), the support
-for LGBT+ issues among right-wing populists will decrease.
+With these findings in mind, the authors argue that the homonationalist thesis is correct and that the increased levels of support for LGBT+ issues among the wider general public in western countries is not entirely genuine, but also in part the result of a strategic move by right-wing populists to deradicalize their image by defining themselves by "who they are not" rather than "who they are". They further speculate that as soon as the political context changes and LGBT+ rights are at stake (but absent of the perceived threat of "immigrants"), the support for LGBT+ issues among right-wing populists will decrease.
 
-***Exercise 2:** Data Preparation and Exploration Use the data file
-study1_data.csv to begin the replication process. Identify and describe
-the experimental variables (i.e., treatment and immigration attitudes)
-and provide visualizations of their distribution. Then, select up to
-four covariates (e.g., gender, age, etc.) and plot their distribution
-too. If necessary, clean or transform variables. Document any changes.*
+***Exercise 2:** Data Preparation and Exploration Use the data file study1_data.csv to begin the replication process. Identify and describe the experimental variables (i.e., treatment and immigration attitudes) and provide visualizations of their distribution. Then, select up to four covariates (e.g., gender, age, etc.) and plot their distribution too. If necessary, clean or transform variables. Document any changes.*
 
-From looking at the csv table for Study1 as well as looking at the
-study1.R script, one can deduce which variables are likely of interest
-for the replication. As a first step, I need to find the dependent
-variable (DV) support for LGBT+ inclusive education, which according to
-the text had a 0-11 range with a randomized scale order that was
-transformed to 0 and 1 for easier interpretation. Secondly, I need to
-find the experimental variables for treatment and immigration attitudes.
-The treatment variable concerns the exposure to Muslim names and
-pictures and is most likely operationalized as a binary variable (0,1).
-The variable for immigration attitudes is likely to be operationalized
-as an ordinal scale (0-10) or as a binary variable.
+From looking at the csv table for Study1 as well as looking at the study1.R script, one can deduce which variables are likely of interest for the replication. As a first step, I need to find the dependent variable (DV) support for LGBT+ inclusive education, which according to the text had a 0-11 range with a randomized scale order that was transformed to 0 and 1 for easier interpretation. Secondly, I need to find the experimental variables for treatment and immigration attitudes. The treatment variable concerns the exposure to Muslim names and pictures and is most likely operationalized as a binary variable (0,1). The variable for immigration attitudes is likely to be operationalized as an ordinal scale (0-10) or as a binary variable.
 
-A look at the Csv table revealed the following variables as of interest
-for the replication:
+A look at the Csv table revealed the following variables as of interest for the replication:
 
--   Treatment variable: outcome_treat (categorical with NAs), treatment
-    (ordinal)
+-   Treatment variable: outcome_treat (categorical with NAs), treatment (ordinal)
 
--   Immigration attitudes: imm_1, imm_2, (both ordinal) imm1mean
-    (continuous, same value), immbelow, imm3 ( both ordinal)
+-   Immigration attitudes: imm_1, imm_2, (both ordinal) imm1mean (continuous, same value), immbelow, imm3 ( both ordinal)
 
 -   Dependent Variable: support (ordinal), support2 (categorical)
 
-By also looking at the study1.R script in the code chunk below, I can
-see that the following variables are of interest for the replication,
-while the rest can likely be ignored:
+By also looking at the study1.R script in the code chunk below, I can see that the following variables are of interest for the replication, while the rest can likely be ignored:
 
 ```{r}
 #df <-df%>% 
@@ -140,31 +62,21 @@ while the rest can likely be ignored:
 #noproimm <- subset(df, immbelow==1)
 ```
 
--   Treatment variable: treatment is transformed twofold -\> treat
-    (converted to cat. variable for model transformation), treatnum
-    (converted to numeric binary variable for graph)
+-   Treatment variable: treatment is transformed twofold -\> treat (converted to cat. variable for model transformation), treatnum (converted to numeric binary variable for graph)
 
--   Immigration attitudes: immbelow (cat., converted to binary variable
-    for graph), imm_1 (ordinal, 0-10 with 10 standing for maximal
-    positive attitude towards immigrants)
+-   Immigration attitudes: immbelow (cat., converted to binary variable for graph), imm_1 (ordinal, 0-10 with 10 standing for maximal positive attitude towards immigrants)
 
 -   Dependent Variable: support (ordinary)
 
-From this I conclude that the following variables are of interest for
-the replication:
+From this I conclude that the following variables are of interest for the replication:
 
 -   Treatment variable operationalization: treatment (0,1)
 
--   Immigrant attitudes operationalization: imm_1 (ordinal scale 0-10)
-    ((or immbelow, for binary distribution Pro-/AntiImmigration))
+-   Immigrant attitudes operationalization: imm_1 (ordinal scale 0-10) ((or immbelow, for binary distribution Pro-/AntiImmigration))
 
 -   Dependent Variable operationalization: support (0,1)
 
-Below I will provide visualizations of the distribution of these
-variables. Let's start with the treatment variable. But first, I need to
-load the data sets and the necessary packages. I will then transform the
-treatment variable for better visualization and provide a table and a
-bar plot of the distribution of the treatment variable.
+Below I will provide visualizations of the distribution of these variables. Let's start with the treatment variable. But first, I need to load the data sets and the necessary packages. I will then transform the treatment variable for better visualization and provide a table and a bar plot of the distribution of the treatment variable.
 
 ```{r}
 study1 <- 
@@ -178,8 +90,7 @@ study1 <-study1%>%
 #is.factor(study1$treatment)
 ```
 
-Variable distribution of "treatment" in the form of a table and a bar
-plot:
+Variable distribution of "treatment" in the form of a table and a bar plot:
 
 ```{r}
 table(study1$treatment)
@@ -191,12 +102,11 @@ ggplot(study1, aes(x=treatment)) + geom_bar() +
        x="Treatment", y="Frequency")
 ```
 
-0 = control group, 1 = treatment group Unsurprisingly, the treatment
-variable is distributed evenly across the two groups, as it should be in
-a randomized experiment.
+0 = control group, 1 = treatment group
 
-Next, I will visualize the distribution of the Immigration attitude
-variable "imm_1"::
+Unsurprisingly, the treatment variable is distributed evenly across the two groups, as it should be in a randomized experiment.
+
+Next, I will visualize the distribution of the Immigration attitude variable "imm_1"::
 
 ```{r}
 table(study1$imm_1)
@@ -209,13 +119,11 @@ ggplot(study1, aes(x=imm_1)) + geom_bar() +
        y="Frequency")
 ```
 
-Ordinal scale: 0 = most negative attitude towards immigrants, 1 = most
-positive attitude towards immigrants The distribution of attitudes
-towards immigrants is skewed towards the positive side, with more
-respondents having a positive attitude.
+Ordinal scale: 0 = most negative attitude towards immigrants, 1 = most positive attitude towards immigrants
 
-Lastly, I will visualize the distribution of the dependent variable
-"support for LGBT+ inclusive education":
+The distribution of attitudes towards immigrants is skewed towards the positive side, with more respondents having a positive attitude.
+
+Lastly, I will visualize the distribution of the dependent variable "support for LGBT+ inclusive education":
 
 ```{r}
 table(study1$support2)
@@ -227,27 +135,17 @@ ggplot(study1, aes(x=support2)) + geom_bar() +
        x="Stance on LGBT+ inclusive education", y="Frequency")
 ```
 
-The distribution of support for LGBT+ inclusive education is skewed
-towards the positive side, with most respondents supporting LGBT+
-inclusive education.
+The distribution of support for LGBT+ inclusive education is skewed towards the positive side, with most respondents supporting LGBT+ inclusive education.
 
-Selecting covariates - I pick the following covariates for the
-analysis: - age: Age is often associated with a change in political
-attitudes over time -\> age (numeric) or agecat (categorical) -\> I pick
-age so that I have a continuous variable in the analysis
+Selecting covariates - I pick the following covariates for the analysis:
 
--   gender: Gender is associated with different attitudes towards LGBT+
-    rights and immigration and could impact that relationship as well
-    -\> I pick the binary variable gender (categorical, Man, Woman)
+-   age: Age is often associated with a change in political attitudes over time and could affect the relationship of attitudes towards immigration on support of LGBT+ incl. education. age (numeric) or agecat (categorical) -\> I pick age so that I have a continuous variable in the analysis
 
--   sexual identity/orientation: I expect that identifying as LGBT+ will
-    have a big influence on the relationship of the experimental
-    variables and the DV. -\> I pick the variable queer (categorical,
-    Heterosexual, Not heterosexual)
+-   gender: Gender is associated with different attitudes towards LGBT+ rights and immigration and could impact that relationship as well -\> I pick the binary variable gender (categorical, Man, Woman)
 
--   race: not being white (in the case of the UK) might also impact the
-    relationship between IV's and the DV. I also wanted to add a
-    non-binary categorical variable -\> I pick the variable race.
+-   sexual identity/orientation: I expect that identifying as LGBT+ themselves will have a big influence on the relationship of the experimental variables and the DV. -\> I pick the variable queer (categorical, Heterosexual, Not heterosexual)
+
+-   race: race might impact someone's concept of being/not being "native". This in turn could then also impact the relationship between IV's and the DV. I also wanted to add a non-binary categorical variable -\> I pick the variable race.
 
 Age:
 
@@ -255,8 +153,7 @@ Age:
 table(study1$agecat)
 ```
 
-Data Cleaning: There are 3 Nas in the data frame that affect all the
-covariates I selected. I will remove from the data set:
+Data Cleaning: There are 3 NAs in the data frame that affect all the covariates I selected. I will remove from the data set:
 
 ```{r}
 nas_by_column <- 
@@ -286,8 +183,7 @@ ggplot(study1_cleaned, aes(x=agecat)) + geom_bar() +
        y="Frequency")
 ```
 
-The distribution of age is skewed towards older respondents, with most
-respondents being in their 30s and above.
+The distribution of age is skewed towards older respondents, with most respondents being in their 30s and above.
 
 Gender:
 
@@ -300,8 +196,7 @@ ggplot(study1_cleaned, aes(x=gender)) + geom_bar() +
   labs(title="Distribution of gender", x="Gender", y="Frequency")
 ```
 
-There are slightly more Men than Women in the sample, but overall they
-are distributed evenly.
+There are slightly more Men than Women in the sample, but overall they are distributed evenly.
 
 Sexual Identity:
 
@@ -315,8 +210,7 @@ ggplot(study1_cleaned, aes(x=queer)) + geom_bar() +
        y="Frequency")
 ```
 
-The large majority of respondents identify as heterosexual, with only a
-small minority identifying as not heterosexual.
+The large majority of respondents identify as heterosexual, with only a small minority identifying as not heterosexual.
 
 Race:
 
@@ -329,12 +223,9 @@ ggplot(study1_cleaned, aes(x=race)) + geom_bar() +
   labs(title="Distribution of different races", x="Race", y="Frequency")
 ```
 
-Overwhelming majority of respondents identify as white, with the rest
-distributing evenly.
+Overwhelming majority of respondents identify as white, with the rest distributing evenly.
 
-Exercise 3: Covariate Balance Check for balance across covariates and
-report the results in a table and a plot. Explain your findings. Why
-would you expect randomization to lead to balance across covariates?
+***Exercise 3:** Covariate Balance Check for balance across covariates and report the results in a table and a plot. Explain your findings. Why would you expect randomization to lead to balance across covariates?*
 
 ```{r}
 study1_cleaned_transformed <-study1_cleaned%>% 
@@ -358,45 +249,35 @@ balance_table <- CreateTableOne(vars = covariates, strata = treatment_var, data 
 print(balance_table, smd = TRUE)  # SMD = standardized mean differences
 ```
 
-Treatment group outcome statistically distinct at: \* p \< 0.1, \*\* p
-\< 0.05, \*\*\* p \< 0.01 The sample size in each treatment group is n =
-574 participants per group.
+Treatment group outcome statistically distinct at: \* p \< 0.1, \*\* p \< 0.05, \*\*\* p \< 0.01 The sample size in each treatment group is n = 574 participants per group.
 
-Distribution of covariates across treatment groups: - gender (Woman): In
-terms of gender distribution the sample is quite balanced with women
-accounting for about 52% in both treatment groups - age: The mean age is
-slightly different with 48.06 years for group 0 and 46.98 years for
-group 1, but this difference is minor. - queer (Not heterosexual): The
-proportion of participants identifying as “Not heterosexual” is 9.1% in
-group 0 and 10.5% in group 1 and therefore quite well balanced. -
-Distribution of race across treatment groups is consistent: - Asian:
-7.0% in each group - Black: 3.7% in group 0 and 3.0% in group 1 - Mixed:
-5.1% in group 0 and 5.2% in group 1 - Other: 1.0% in group 0 and 1.6% in
-group 1 - White: 83.3% in both groups Although there are small
-variations in the counts of some racial groups, these differences are
-not statistically significant.
+Distribution of covariates across treatment groups:
 
-All SMD Values are well below 0.1, which typically indicates that
-covariates are well-balanced between groups. Also, none of the p-values
-are significant, meaning there are no statistically significant
-differences in these covariates between groups, which further confirms
-balance.
+-   gender (Woman): In terms of gender distribution the sample is quite balanced with women accounting for about 52% in both treatment groups
 
-Why Randomization Should Lead to Balance: In randomized experiments,
-each participant has an equal probability of being assigned to any
-treatment group. This process should, on average, distribute
-participants with different covariate values equally across treatment
-groups. Since the distribution of covariates is similar, any observed
-effects are more likely attributable to the treatment rather than
-pre-existing differences. Some minor imbalance can still occur due to
-random chance, but with sufficiently large sample sizes (as is the case
-here), these differences should be minimal, as seen in the low SMDs.
+-   age: The mean age is slightly different with 48.06 years for group 0 and 46.98 years for group 1, but this difference is minor.
 
-Considering the table, the results confirm that randomization has
-effectively created comparable groups across gender, age, and queer.
-This balanced setup make it possible to assess the treatment effect with
-confidence, knowing that pre-treatment covariate differences are not
-driving any observed outcome differences.
+-   queer (Not heterosexual): The proportion of participants identifying as “Not heterosexual” is 9.1% in group 0 and 10.5% in group 1 and therefore quite well balanced.
+
+Distribution of race across treatment groups is consistent:
+
+-   Asian: 7.0% in each group
+
+-   Black: 3.7% in group 0 and 3.0% in group 1
+
+-   Mixed: 5.1% in group 0 and 5.2% in group 1
+
+-   Other: 1.0% in group 0 and 1.6% in group 1
+
+-   White: 83.3% in both groups
+
+Although there are small variations in the counts of some racial groups, these differences are not statistically significant.
+
+All SMD Values are well below 0.1, which typically indicates that covariates are well-balanced between groups. Also, none of the p-values are significant, meaning there are no statistically significant differences in these covariates between groups, which further confirms balance.
+
+Why Randomization Should Lead to Balance: In randomized experiments, each participant has an equal probability of being assigned to any treatment group. This process should, on average, distribute participants with different covariate values equally across treatment groups. Since the distribution of covariates is similar, any observed effects are more likely attributable to the treatment rather than pre-existing differences. Some minor imbalance can still occur due to random chance, but with sufficiently large sample sizes (as is the case here), these differences should be minimal, as seen in the low SMDs.
+
+Considering the table, the results confirm that randomization has effectively created comparable groups across gender, age, and queer. This balanced setup make it possible to assess the treatment effect with confidence, knowing that pre-treatment covariate differences are not driving any observed outcome differences.
 
 Plots for all Covariates across treatment groups:
 
@@ -422,23 +303,11 @@ for (covariate in covariates) { # looping through each covariate
 }
 ```
 
-All the plots show nicely that samples are evenly distributed across
-both treatment groups.
+All the plots show nicely that samples are evenly distributed across both treatment groups.
 
-***Exercise 4 (additional):** Estimate Treatment Effect This exercise is
-not mandatory, but it serves only to opt for the maximum grade (6).
-Estimate the average effect of the treatment on the outcome variable
-support conditional on the pre-treatment immigration attitudes imm_1.
-For this, use an interaction term in an OLS regression model. Compare
-your results to those in the original paper. Then, repeat this analysis
-with three iteratively smaller random samples of the treatment (n = 200,
-n = 100, n = 10) and control groups (n = 200, n = 100, n = 10); total N
-= 400, 200, and 20, respectively. Explain your findings. Finally,
-discuss how sample size impacts the results and what this implies about
-the role of randomization for selection bias.*
+***Exercise 4 (additional):** Estimate Treatment Effect This exercise is not mandatory, but it serves only to opt for the maximum grade (6). Estimate the average effect of the treatment on the outcome variable support conditional on the pre-treatment immigration attitudes imm_1. For this, use an interaction term in an OLS regression model. Compare your results to those in the original paper. Then, repeat this analysis with three iteratively smaller random samples of the treatment (n = 200, n = 100, n = 10) and control groups (n = 200, n = 100, n = 10); total N = 400, 200, and 20, respectively. Explain your findings. Finally, discuss how sample size impacts the results and what this implies about the role of randomization for selection bias.*
 
-Estimating the average effect of the treatment on the outcome variable
-support conditional on the pre-treatment variable imm_1:
+Estimating the average effect of the treatment on the outcome variable support conditional on the pre-treatment variable imm_1:
 
 ```{r}
 Study1_OLS <-study1_cleaned_transformed%>% 
@@ -447,16 +316,9 @@ OLS_model <- lm(support ~ treat*imm_1, data = Study1_OLS) # interaction term
 summary(OLS_model, robust=TRUE)
 ```
 
-The model suggests that treat, imm_1, and the interaction between them
-all significantly influence support.The treatment (treat1) has a
-positive effect, and higher values of imm_1 also increase the likelihood
-of support. The negative interaction term suggests that the effect of
-imm_1 on support is slightly weaker when the treatment is applied.
-Although all the predictors are significant, the model explains only a
-modest proportion of the variance in the outcome.
+The model suggests that treat, imm_1, and the interaction between them all significantly influence support.The treatment (treat1) has a positive effect, and higher values of imm_1 also increase the likelihood of support. The negative interaction term suggests that the effect of imm_1 on support is slightly weaker when the treatment is applied. Although all the predictors are significant, the model explains only a modest proportion of the variance in the outcome.
 
-My results are quite similar to those of Model 2 in the original paper!
-Results from study1 in the original paper:
+My results are quite similar to those of Model 2 in the original paper! Results from study1 in the original paper:
 
 ```{r}
 ###|------------------|----------|----------|----------|----------|
@@ -504,22 +366,9 @@ Comparison:
 ##Note: * p < 0.1, ** p < 0.05, *** p < 0.01
 ```
 
-The results are quite similar, with the coefficients for treat1 and
-imm_1 being almost identical. The p-values are also very close, with the
-coefficient for treat1 being significant at the 5% level in both models.
-The coefficient for the interaction term treat1\*imm_1 is also
-significant at the 5% level in both models. Minor differences in
-significance levels are likely due to small variations in standard
-errors and the slightly smaller sample in my model. The overall
-similarity in coefficients and model fit measures indicates that the
-results are robust and aligned. Both models suggest a moderate positive
-effect of treatment on support, a strong positive association with
-imm_1, and a small dampening effect of treatment on the relationship
-between imm_1 and support.
+The results are quite similar, with the coefficients for treat1 and imm_1 being almost identical. The p-values are also very close, with the coefficient for treat1 being significant at the 5% level in both models. The coefficient for the interaction term treat1\*imm_1 is also significant at the 5% level in both models. Minor differences in significance levels are likely due to small variations in standard errors and the slightly smaller sample in my model. The overall similarity in coefficients and model fit measures indicates that the results are robust and aligned. Both models suggest a moderate positive effect of treatment on support, a strong positive association with imm_1, and a small dampening effect of treatment on the relationship between imm_1 and support.
 
-*Repeat the analysis with three iteratively smaller random samples of
-the treatment (n = 200, n = 100, n = 10) and control groups (n = 200, n
-= 100, n = 10); total N = 400, 200, and 20, respectively. n = 400:*
+*Repeat the analysis with three iteratively smaller random samples of the treatment (n = 200, n = 100, n = 10) and control groups (n = 200, n = 100, n = 10); total N = 400, 200, and 20, respectively. n = 400:*
 
 ```{r}
 create_balanced_sample <- function(data, n_per_group) {
@@ -539,9 +388,9 @@ check_balance <- function(sample_data) {
 }
 sample_400 <- create_balanced_sample(Study1_OLS, 200)  # 200 per t = 400 total
 model_400 <- lm(support ~ treat*imm_1, data = sample_400)
-print("Balance check for N=400:")
+#print("Balance check for N=400:")
 check_balance(sample_400)
-print("Results for N=400:")
+#print("Results for N=400:")
 summary(model_400)
 ```
 
@@ -550,9 +399,9 @@ n = 200:
 ```{r}
 sample_200 <- create_balanced_sample(Study1_OLS, 100)  # 100 per t = 200 total
 model_200 <- lm(support ~ treat*imm_1, data = sample_200)
-print("Balance check for N=200:")
+#print("Balance check for N=200:")
 check_balance(sample_200)
-print("Results for N=200:")
+#print("Results for N=200:")
 summary(model_200)
 ```
 
@@ -561,9 +410,9 @@ n = 20:
 ```{r}
 sample_20 <- create_balanced_sample(Study1_OLS, 10)  # 10 per t = 20 total
 model_20 <- lm(support ~ treat*imm_1, data = sample_20)
-print("Balance check for N=20:")
+#print("Balance check for N=20:")
 check_balance(sample_20)
-print("Results for N=20:")
+#print("Results for N=20:")
 summary(model_20)
 ```
 
@@ -583,28 +432,6 @@ stargazer(model_400, model_200, model_20, type = "text",
           title = "Regression Results for Different Sample Sizes")
 ```
 
-Treatment Effect (treat1): As sample size decreases, the effect of
-treatment on support grows larger, but standard errors increase, while
-statistical significance fluctuates. This suggests that smaller samples
-are less precise and more prone to random fluctuations in treatment
-effect estimates. Similar observations can be made for R-squared and
-adjusted R-squared values and F-Values, which all decrease as sample
-size decreases.
+Treatment Effect (treat1): As sample size decreases, the effect of treatment on support grows larger, but standard errors increase, while statistical significance fluctuates. This suggests that smaller samples are less precise and more prone to random fluctuations in treatment effect estimates. Similar observations can be made for R-squared and adjusted R-squared values and F-Values, which all decrease as sample size decreases.
 
-The findings illustrate that larger sample sizes provide more stable and
-precise estimates. As sample size decreases, estimates for treatment and
-the interaction term become increasingly variable, with higher standard
-errors and changing significance levels. This instability suggests that
-smaller samples may fail to capture the true treatment effect
-accurately, leading to over- or underestimation of effects. When it
-comes to random sampling and random assignment in experiments, they
-typically reduce selection bias. However, in smaller samples, the risk
-of imbalances in covariates increases even with randomization, because
-smaller groups are more prone to random variation that may not reflect
-the population accurately. For example, the inflated treatment effect
-observed with the smallest sample size (20 observations) likely reflects
-random sampling noise rather than a genuine increase in the treatment
-effect. This implies that randomization alone is insufficient to prevent
-selection bias in small samples. Adequate sample size is necessary to
-ensure that randomization leads to balanced groups and that results are
-generalizable.
+The findings illustrate that larger sample sizes provide more stable and precise estimates. As sample size decreases, estimates for treatment and the interaction term become increasingly variable, with higher standard errors and changing significance levels. This instability suggests that smaller samples may fail to capture the true treatment effect accurately, leading to over- or underestimation of effects. When it comes to random sampling and random assignment in experiments, they typically reduce selection bias. However, in smaller samples, the risk of imbalances in covariates increases even with randomization, because smaller groups are more prone to random variation that may not reflect the population accurately. For example, the inflated treatment effect observed with the smallest sample size (20 observations) likely reflects random sampling noise rather than a genuine increase in the treatment effect. This implies that randomization alone is insufficient to prevent selection bias in small samples. Adequate sample size is necessary to ensure that randomization leads to balanced groups and that results are generalizable.
